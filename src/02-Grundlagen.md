@@ -186,7 +186,7 @@ hspille@pc4065:/tmp/gitA/javascript-basics/src$
 
 Push von /tmp/gitB -> /tmp/gibA
 
-```Beachte: Da /tmp/gitA kein bare repository ist darf der Branch in den gepusht wird nicht der sein, der gerade ausgecheckt ist.```
+```Beachte: Da /tmp/gitA kein bare Repository ist darf der Branch in den gepusht wird nicht der sein, der gerade ausgecheckt ist. Bei git Servern - echten remotes - wie z.B. gitHub.com, existiert dieses Problem nicht.```
 
 ```bash
 hspille@pc4065:/tmp/gitB/javascript-basics$ git push
@@ -199,150 +199,91 @@ To /tmp/gitB/../gitA/javascript-basics/
    a5210d0..915990c  master -> master
 ```
 
-```javascript
-for (/* Initialisierung */; /* Bedingung */; /* Iteration */) {
-	// Statement
-}
 
-for (var i = 0; i < array.length; i++) {
-	var item = array[i]
-	console.log(item)
-}
+### git fetch ###
+
+Um das lokale Repository zu aktualisieren, werden Änderungen von den remotes gefetcht. 
+
+```bash
+git fetch [<options>] [<repository> [<refspec>...]]
+git fetch [<options>] <group>
+git fetch --multiple [<options>] [(<repository> | <group>)...]
+git fetch --all [<options>]
 ```
 
-```javascript
-do {
-	// Statement
-} while (/* Bedingung */)
+
+Der Schalter ```--all``` ermöglicht das gleichzeitige fetchen aller remote branches - hier der master und test1
+
+
+```bash
+hspille@pc4065:/tmp/gitB/javascript-basics$ git fetch --all
+Fordere an von origin
+remote: Zähle Objekte: 3, Fertig.
+remote: Komprimiere Objekte: 100% (3/3), Fertig.
+remote: Total 3 (delta 2), reused 0 (delta 0)
+Entpacke Objekte: 100% (3/3), Fertig.
+Von /tmp/gitB/../gitA/javascript-basics
+   915990c..f1d2fe2  master     -> origin/master
+ * [neuer Branch]    test1      -> origin/test1
 ```
 
-<div class="panel panel-info">
-<div class="panel-heading">
-	Aufgabe: Schleifen
-</div>
-<div class="panel-body">
-	Schreibe eine Funktion, die die Summe der Zahlen von 1 bis 100 ausgibt.
-</div>
-<div class="panel-footer">
-	Erwartetes Ergebnis: 5050
-</div>
-</div>
+#### git rebase - nach dem fetch
 
-### Arrays ###
+Sollte das lokale Repository's commit's enthalten die noch nicht im remote enthalten sind, bietet sich ein rebase an um kein merge-commit zu erzeugen. Auf diese weise bleibt der commit-tree maximal sauber. 
 
-JavaScript-Arrays können als einfache Listen betrachtet werden. Sie besitzen keine initial festgelegte Größe, sondern lassen sich dynamisch erweitern. Sie können Daten von verschiedenen Typen beinhalten.
-
-Erzeugen von Arrays
-```javascript
-var arr = [ 'wert1', 'wert2', 'foo', 'bar' ]
-
-var leeresArray = []
-
-var gemischtesArray = [ 'string', 1, 3.141592653589793 ]
+```bash
+git rebase [-i | --interactive] [options] [--exec <cmd>] [--onto <newbase>]
+	[<upstream> [<branch>]]
+git rebase [-i | --interactive] [options] [--exec <cmd>] [--onto <newbase>]
+	--root [<branch>]
+git rebase --continue | --skip | --abort | --edit-todo
 ```
 
-Zugriff auf einzelne Elemente
-```javascript
-console.log(arr[3])  // Ausgabe: 'foo'
+```bash
+hspille@pc4065:/tmp/gitB/javascript-basics$ git rebase
+Zunächst wird der Branch zurückgespult, um Ihre Änderungen
+darauf neu anzuwenden...
+master zu refs/remotes/origin/master vorgespult
 ```
 
-Hinzufügen und entfernen von Elementen
-```javascript
-arr.push('test')  // => [ 'wert1', 'wert2', 'foo', 'bar', 'test' ]
+### How rebase works
 
-arr.splice(2, 1)  // => 'foo'
-arr  // => [ 'wert1', 'wert2', 'bar', 'test' ]
-```
+Angenommen die aktuelle Arbeitskopie auf dem gearbeitet wurde ist 'local'. Währenddessen wurde im remote weitergearbeitet, es wurden weitere commits gemacht, die nur im remote exisiteren. Gleichzeitig wurden im lokalen Repository commits gemacht die nicht im remote existieren. 
+<pre>     
+     	  A---B---C local
+         /
+    D---E---F---G remote
+</pre>
 
-Join & Split
-```javascript
-var str = 'Hello World'
+Nach einem fetch und einem rebase wurden die lokalen commits 'umgezogen' auf den HEAD - rebased. 
+<pre>     
+     	  		 A---B---C local
+     			/
+    D---E---F---G remote
+</pre>
 
-var arr = str.split('')  // => [ 'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd' ]
+Nach dem push sieht der Tree dann recht unspektakulär aus. 
 
-var newStr = arr.join('')  // => 'Hello World'
-```
+<pre>     
+    			
+    D---E---F---G---A---B---C remote
 
-<div class="panel panel-info">
-<div class="panel-heading">
-	Aufgabe: Arrays, Join &amp; Split
-</div>
-<div class="panel-body">
-	Schreibe eine Funktion, die das lägste Wort im folgenden Satz ausgibt:<br>
-	JavaScript ist eine Skriptsprache, die ursprünglich für dynamisches HTML in Webbrowsern entwickelt wurde, um Benutzerinteraktionen auszuwerten, Inhalte zu verändern, nachzuladen oder zu generieren und so die Möglichkeiten von HTML und CSS zu erweitern.
-</div>
-<div class="panel-footer">
-	wort: 'Benutzerinteraktionen', laenge: 21
-</div>
-</div>
+</pre>
 
-Iterieren
-```javascript
-// Schleife über Anzahl Einträge
-for (var i = 0; i < arr.length; i++) {
-	var obj = arr[i]
-}
+Anders wäre es bei einem direkten pull:
+<pre>     
+		  A---B---C
+    	 /		   \
+    D---E-----------F---G remote
 
-// Über Index iterieren
-for (i in arr) {
-	var obj = arr[i]
-}
+</pre>
 
-// per forEach-Funktion über Einträge iterieren
-arr.forEach(function(obj, index, referenceToArr) {
-})
-```
+Dies führt schnell in die merge hölle:
 
-Mappen und Filtern
-
-Auch durch die Nutzung von Closures und die Funktionen ```Array.prototype.map(..)``` und ```Array.prototype.filter(..)``` lassen sich Arrays modifizieren.
-
-```javascript
-var artikelListe = [
-	{ nr: 1, name: 'Artikel 1', kategorie: 1 },
-	{ nr: 2, name: 'Artikel 2', kategorie: 1 },
-	{ nr: 3, name: 'Artikel 3', kategorie: 2 },
-	{ nr: 4, name: 'Artikel 4', kategorie: 2 },
-	{ nr: 5, name: 'Artikel 5', kategorie: 3 },
-	{ nr: 6, name: 'Artikel 6', kategorie: 1 },
-]
+<img src="merge.gif" style="max-width:600px" alt="Git">
 
 
-// map
-var artikelnamen = artikelListe.map(function(artikel) {  // wird für jeden Eintrag aufgerufen
-	return artikel.name  // nur den Namen zurückgeben
-})
-// ```artikelnamen``` enthält eine Liste von Strings 'Artikel 1', 'Artikel 2', ...
 
 
-// filter
-var artikelKategorieEins = artikelListe.filter(function(artikel) {  // wird für jeden Eintrag aufgerufen
-	return artikel.kategorie == 1  // gibt true für Kategorie 1 zurück
-})
-// ```artikelKategorieEins``` enthält nur Artikel, bei denen ```kategorie == 1``` ist.
-
-// ```artikelListe``` bleibt unverändert
-```
-
-### Objekte ###
-
-Erzeugen von Objekten
-```javascript
-var obj = new Object()
-
-var obj = {}
-
-var obj = {
-	attribut: 'wert',
-	foo: 'bar',
-	setFoo: function(newFoo) { this.foo = newFoo }
-}
-
-obj.setFoo('test')
-
-console.log(obj)  // Ausgabe: { attribut: 'wert', foo: 'test', setFoo: [Function] }
-```
-```attribut``` und ```foo``` werden Properties genannt, setFoo ist eine Methode des Objektes.
-Die Objekte wurden nicht aus Klassen erzeugt. Sie sind vom Typ ```Object```.
 
 
