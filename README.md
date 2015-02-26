@@ -1,4 +1,4 @@
-JavaScript-Basics
+git-Basics
 =================
 
 ### Dependencies ###
