@@ -30,10 +30,10 @@ git clone [--template=<template_directory>]
 Beispiel
 
 ```bash
-hspille@pc4065:~/$ cd /tmp
-hspille@pc4065:/tmp$ mkdir gitA
-hspille@pc4065:/tmp$ cd gitA
-hspille@pc4065:/tmp/gitA$ git clone git@github.com:jclohmann/javascript-basics.git
+hspille@c64:~/$ cd /tmp
+hspille@c64:/tmp$ mkdir gitA
+hspille@c64:/tmp$ cd gitA
+hspille@c64:/tmp/gitA$ git clone git@github.com:jclohmann/javascript-basics.git
 Klone nach 'javascript-basics'...
 remote: Counting objects: 154, done.
 remote: Total 154 (delta 0), reused 0 (delta 0), pack-reused 154
@@ -44,21 +44,21 @@ Prüfe Konnektivität... Fertig.
 
 Klonen des geklonten repos
 ```bash
-hspille@pc4065:/tmp/gitA$ cd ..
-hspille@pc4065:/tmp$ mkdir gitB
-hspille@pc4065:/tmp$ cd gitB
-hspille@pc4065:/tmp/gitB$ git clone ../gitA/javascript-basics/
+hspille@c64:/tmp/gitA$ cd ..
+hspille@c64:/tmp$ mkdir gitB
+hspille@c64:/tmp$ cd gitB
+hspille@c64:/tmp/gitB$ git clone ../gitA/javascript-basics/
 Klone nach 'javascript-basics'...
 Fertig.
 ```
 
 Beweis das es ein remote hat in /tmp/gitA
 ```bash
-hspille@pc4065:/tmp/gitB$ cd javascript-basics/
-hspille@pc4065:/tmp/gitB/javascript-basics$ git remote --v
+hspille@c64:/tmp/gitB$ cd javascript-basics/
+hspille@c64:/tmp/gitB/javascript-basics$ git remote --v
 origin	/tmp/gitB/../gitA/javascript-basics/ (fetch)
 origin	/tmp/gitB/../gitA/javascript-basics/ (push)
-hspille@pc4065:/tmp/gitB/javascript-basics$ 
+hspille@c64:/tmp/gitB/javascript-basics$ 
 ```
 
 
@@ -67,7 +67,7 @@ hspille@pc4065:/tmp/gitB/javascript-basics$
 Ähnlich wie bei SVN können mit git einzelne Dateien die verändert wurden in einem commit zusammengefasst werden. Um zu sehen welche Dateien für einen commit vorgemerkt sind, bietet sich 'git status' an.
 
 ```bash
-hspille@pc4065:/tmp/gitA/javascript-basics/src$ git st
+hspille@c64:/tmp/gitA/javascript-basics/src$ git st
 Auf Branch master
 Ihr Branch ist auf dem selben Stand wie 'origin/master'.
 Änderungen, die nicht zum Commit vorgemerkt sind:
@@ -104,14 +104,14 @@ git add -A .
 ```
 Und hinterher prüfen mit status:
 ```bash
-hspille@pc4065:/tmp/gitA/javascript-basics/src$ git status
+hspille@c64:/tmp/gitA/javascript-basics/src$ git status
 Auf Branch master
 Ihr Branch ist auf dem selben Stand wie 'origin/master'.
 zum Commit vorgemerkte Änderungen:
   (benutzen Sie "git reset HEAD <Datei>..." zum Entfernen aus der Staging-Area)
 
 	geändert:       02-grundlagen-der-sprache.md
-hspille@pc4065:/tmp/gitA/javascript-basics/src$
+hspille@c64:/tmp/gitA/javascript-basics/src$
 ```
 
 
@@ -132,7 +132,7 @@ git commit [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
 Commiten der vorher vorgemerkten Dateien
 
 ```bash
-hspille@pc4065:/tmp/gitA/javascript-basics/src$ git commit -m 'Some Changes'
+hspille@c64:/tmp/gitA/javascript-basics/src$ git commit -m 'Some Changes'
 [master a174710] Some Changes
  1 file changed, 1 insertion(+), 1 deletion(-)
 ```
@@ -181,12 +181,12 @@ git push [--all | --mirror | --tags] [--follow-tags] [-n | --dry-run] [--receive
 Push bei Synchronen remotes. Status abfragen.
 
 ```bash
-hspille@pc4065:/tmp/gitA/javascript-basics/src$ git st
+hspille@c64:/tmp/gitA/javascript-basics/src$ git st
 Auf Branch master
 Ihr Branch ist vor 'origin/master' um 1 Commit.
   (benutzen Sie "git push", um lokale Commits zu publizieren)
 nichts zu committen, Arbeitsverzeichnis unverändert
-hspille@pc4065:/tmp/gitA/javascript-basics/src$ 
+hspille@c64:/tmp/gitA/javascript-basics/src$ 
 ```
 
 Push von /tmp/gitB -> /tmp/gibA
@@ -194,7 +194,7 @@ Push von /tmp/gitB -> /tmp/gibA
 ```Beachte: Da /tmp/gitA kein bare Repository ist darf der Branch in den gepusht wird nicht der sein, der gerade ausgecheckt ist. Bei git Servern - echten remotes - wie z.B. gitHub.com, existiert dieses Problem nicht.```
 
 ```bash
-hspille@pc4065:/tmp/gitB/javascript-basics$ git push
+hspille@c64:/tmp/gitB/javascript-basics$ git push
 Zähle Objekte: 3, Fertig.
 Delta compression using up to 4 threads.
 Komprimiere Objekte: 100% (3/3), Fertig.
@@ -221,7 +221,7 @@ Der Schalter ```--all``` ermöglicht das gleichzeitige fetchen aller remote bran
 
 
 ```bash
-hspille@pc4065:/tmp/gitB/javascript-basics$ git fetch --all
+hspille@c64:/tmp/gitB/javascript-basics$ git fetch --all
 Fordere an von origin
 remote: Zähle Objekte: 3, Fertig.
 remote: Komprimiere Objekte: 100% (3/3), Fertig.
@@ -245,7 +245,7 @@ git rebase --continue | --skip | --abort | --edit-todo
 ```
 
 ```bash
-hspille@pc4065:/tmp/gitB/javascript-basics$ git rebase
+hspille@c64:/tmp/gitB/javascript-basics$ git rebase
 Zunächst wird der Branch zurückgespult, um Ihre Änderungen
 darauf neu anzuwenden...
 master zu refs/remotes/origin/master vorgespult
@@ -319,13 +319,13 @@ git branch --edit-description [<branchname>]
 Erstellen und Auflisten von branches.
 
 ```bash
-hspille@pc4065:/tmp/gitA/javascript-basics$ git branch
+hspille@c64:/tmp/gitA/javascript-basics$ git branch
 * master
-hspille@pc4065:/tmp/gitA/javascript-basics$ git branch myNewBranch
-hspille@pc4065:/tmp/gitA/javascript-basics$ git branch 
+hspille@c64:/tmp/gitA/javascript-basics$ git branch myNewBranch
+hspille@c64:/tmp/gitA/javascript-basics$ git branch 
 * master
   myNewBranch
-hspille@pc4065:/tmp/gitA/javascript-basics$ 
+hspille@c64:/tmp/gitA/javascript-basics$ 
 ```
 
 
@@ -397,3 +397,7 @@ http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf
 Ausführliche Online Doku:
 
 http://git-scm.com/doc
+
+Quellen dieser Doku:
+
+https://github.com/hSpille/git-basics
