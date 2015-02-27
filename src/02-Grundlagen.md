@@ -12,6 +12,11 @@ Man unterscheidet zwischen dem lokalen Repository und den entfernten Repsitories
 
 <img src="remotes.png" alt="Git">
 
+
+
+### Klonen eines Repo's mit clone ###
+
+
 ```bash
 git clone [--template=<template_directory>]
 	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
@@ -22,7 +27,7 @@ git clone [--template=<template_directory>]
 	  [<directory>]
 ```	 
 
-Klonen eines Repo's mit clone
+Beispiel
 
 ```bash
 hspille@pc4065:~/$ cd /tmp
@@ -54,8 +59,8 @@ hspille@pc4065:/tmp/gitB/javascript-basics$ git remote --v
 origin	/tmp/gitB/../gitA/javascript-basics/ (fetch)
 origin	/tmp/gitB/../gitA/javascript-basics/ (push)
 hspille@pc4065:/tmp/gitB/javascript-basics$ 
-
 ```
+
 
 ### git status ###
 
@@ -284,6 +289,111 @@ Dies führt schnell in die merge hölle:
 
 
 
+### git rebase --ff-only Flag
+
+Aus der git-doku:
+
+```
+--ff-only
+Refuse to merge and exit with a non-zero status unless the current HEAD is already up-to-date or the merge can be resolved as a fast-forward
+```
+
+### git branch
+
+Mittels branch lassen sich branches anzeigen, erstellen oder löschen. Zum wechseln zwischen existierenden Branches dient checkout.
+
+
+```bash
+git branch [--color[=<when>] | --on-color] [-r | -a]
+	[--list] [-v [--abbrev=<length> | --no-abbrev]]
+	[--column[=<options>] | --no-column]
+	[(--merged | --no-merged | --contains) [<commit>]] [<pattern>...]
+git branch [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
+git branch (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+git branch --unset-upstream [<branchname>]
+git branch (-m | -M) [<oldbranch>] <newbranch>
+git branch (-d | -D) [-r] <branchname>...
+git branch --edit-description [<branchname>]
+```
+
+Erstellen und Auflisten von branches.
+
+```bash
+hspille@pc4065:/tmp/gitA/javascript-basics$ git branch
+* master
+hspille@pc4065:/tmp/gitA/javascript-basics$ git branch myNewBranch
+hspille@pc4065:/tmp/gitA/javascript-basics$ git branch 
+* master
+  myNewBranch
+hspille@pc4065:/tmp/gitA/javascript-basics$ 
+```
+
+
+### git checkout
+
+Um zwischen Branches zu wechseln oder veränderungen einzelner Dateien rückgängig zu machen dient git checkout.
+
+```bash
+git checkout [-q] [-f] [-m] [<branch>]
+git checkout [-q] [-f] [-m] --detach [<branch>]
+git checkout [-q] [-f] [-m] [--detach] <commit>
+git checkout [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
+git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
+git checkout [-p|--patch] [<tree-ish>] [--] [<paths>...]
+```
 
 
 
+
+### Conclusion /  workflow
+
+
+
+* Dateien vormerken
+
+<div class="code">
+git add <filename>
+</div>
+
+* Dateien lokal commiten.
+
+<div class="code">
+git commit -m 'My message to the world'
+</div>
+
+
+* Das lokale Repo aktualisieren
+
+<div class="code">
+git fetch origin/master
+</div>
+
+* Rebase um die eigenen Änderungen anzuwenden
+
+<div class="code">
+git rebase
+</div>
+
+* Die eigenen Änderungen auf den Servern publizieren
+
+<div class="code">
+git push 
+</div>
+
+
+* Mit gitk nachschauen ob alles geklappt hat
+
+<div class="code">
+gitk --all
+</div>
+
+
+### Cheat-Shet / Online doku
+
+Kurzes Cheat-Sheet
+
+http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf
+
+Ausführliche Online Doku:
+
+http://git-scm.com/doc
