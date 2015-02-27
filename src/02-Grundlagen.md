@@ -143,19 +143,19 @@ Um zu sehen ob ein commit erfolgte kann sich jeder die history eines Repositorie
 
 ```bash
 commit a1747103c09ef7d7ce580444492b5fef54fa3d37
-Author: hspille <henning.spille@vit.de>
+Author: hspille <x.y@z.de>
 Date:   Thu Feb 26 14:09:13 2015 +0100
 
     Some Changes
 
 commit a5210d0c0e32bb7d32cb50e641ed095e4f868daa
-Author: jlohman <jan-christoph.lohmann@vit.de>
+Author: jlohman <x.v@z.de>
 Date:   Tue Feb 3 11:58:16 2015 +0100
 
     Events
 
 commit f733be79d299dca086b3f0d0fe4844fc795d5453
-Author: jlohman <jan-christoph.lohmann@vit.de>
+Author: jlohman <x.v@z.de>
 Date:   Fri Jan 23 14:40:55 2015 +0100
 
     Vererbung
